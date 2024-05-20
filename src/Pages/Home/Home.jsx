@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import BistroBoss from "../../componentes/BistroBoss/BistroBoss";
 import Banner from "./Banner/Banner";
 import Category from "./Category/Category";
@@ -9,6 +10,11 @@ import Testimonial from "./Testimonial/Testimonial";
 const Home = () => {
     return (
         <div>
+            <Helmet>
+                <title>
+                    Bistro Boss || Home
+                </title>
+            </Helmet>
             <Banner/>
             <Category/>
             <BistroBoss/>

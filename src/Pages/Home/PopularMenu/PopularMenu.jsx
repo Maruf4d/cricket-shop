@@ -32,7 +32,7 @@ const PopularMenu = () => {
             </MenuItems>)
         }
      </div>
-       
+       <button className="btn btn-outline w-1/6 border-0 border-b-4 my-5">See All</button>
 
             
         </section>
