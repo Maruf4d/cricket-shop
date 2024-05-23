@@ -9,11 +9,14 @@ const Navbar = () => {
       <li>
         <Link to='menu'>Our Menu</Link>
       </li>
+      <li>
+        <Link to='order/salad'>Order</Link>
+      </li>
     </>
   );
 
   return (
-    <div className="navbar fixed z-10 opacity-40 font-extrabold bg-black text-white">
+    <div className="navbar fixed z-10 opacity-60 font-extrabold bg-blue-700 text-white">
       <div className="navbar-start">
         <div className="dropdown">
           <div
