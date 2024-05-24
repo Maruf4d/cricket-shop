@@ -3,12 +3,21 @@ import bgLogin from "../../../assets/others/authentication.png";
 import loginPng from "../../../assets/others/authentication2.png";
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { useEffect, useRef, useState } from "react";
+import { useAuth } from "../../../Hooks/useAuth";
+import { Link } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
+
 
 const Login = () => {
 
     const [disable , setDisable] = useState(true);
     const validateRef = useRef();
-    // form submit
+
+    // auth Context
+    const {singIn , googleLogin} = useAuth();
+
+  // form submit
   function handleSubmit(e) {
     e.preventDefault();
     const form = e.target;
@@ -16,9 +25,23 @@ const Login = () => {
     const password = form.password.value;
     const user = { email, password };
     console.log(user);
+    singIn(email , password)
+    .then(result =>{
+      console.log(result.user);
+    })
   }
-// captcha handle 
 
+  function handleGoogleLogin(){
+    googleLogin()
+    .then(result =>{
+      console.log(result.user);
+    })
+    .catch(err => {
+      console.error(err)
+    })
+  }
+
+// captcha handle 
   function handleValidateCaptcha () {
     const user_captcha_value = validateRef.current.value;
     console.log(user_captcha_value);
@@ -100,6 +123,18 @@ const Login = () => {
                 <input disabled={disable} className="btn bg-[#D1A054B3]" type="submit" value="Sing in" />
               </div>
             </form>
+           <div className="text-center">
+           <p className="text-[#D1A054B3] "><small>New here? <Link to='/singUp' className="font-bold "> Create a new Account </Link> </small></p>
+           <p>Or sing in with</p>
+          
+         <div className="flex items-center justify-center gap-5 my-2">
+         <button onClick={handleGoogleLogin}>
+          <FcGoogle  className="text-3xl"/>
+          </button>
+          <button className="text-3xl">  <FaGithub /></button>
+         </div>
+   
+           </div>
           </div>
         </div>
       </div>
