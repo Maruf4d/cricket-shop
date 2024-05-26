@@ -2,20 +2,20 @@ import { Helmet } from "react-helmet-async";
 import bgLogin from "../../../assets/others/authentication.png";
 import loginPng from "../../../assets/others/authentication2.png";
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../../Hooks/useAuth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 
 const Login = () => {
 
     const [disable , setDisable] = useState(true);
-    const validateRef = useRef();
-
     // auth Context
     const {singIn , googleLogin} = useAuth();
+    const navigate = useNavigate();
 
   // form submit
   function handleSubmit(e) {
@@ -23,18 +23,55 @@ const Login = () => {
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    const user = { email, password };
-    console.log(user);
+    
     singIn(email , password)
     .then(result =>{
       console.log(result.user);
+      Swal.fire({
+        title: "user login successfully",
+        icon: "success",
+        showClass: {
+          popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__faster
+          `
+        },
+        hideClass: {
+          popup: `
+            animate__animated
+            animate__fadeOutDown
+            animate__faster
+          `
+        }
+      });
+      navigate('/')
     })
   }
 
   function handleGoogleLogin(){
     googleLogin()
-    .then(result =>{
-      console.log(result.user);
+    .then(() =>{
+
+      Swal.fire({
+        title: "user login successfully",
+        icon: "success",
+        showClass: {
+          popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__faster
+          `
+        },
+        hideClass: {
+          popup: `
+            animate__animated
+            animate__fadeOutDown
+            animate__faster
+          `
+        }
+      });
+      navigate('/')
     })
     .catch(err => {
       console.error(err)
@@ -42,9 +79,8 @@ const Login = () => {
   }
 
 // captcha handle 
-  function handleValidateCaptcha () {
-    const user_captcha_value = validateRef.current.value;
-    console.log(user_captcha_value);
+  function handleValidateCaptcha (e) {
+    const user_captcha_value = e.target.value;
     if(validateCaptcha(user_captcha_value)){
         setDisable(false)
     }
@@ -59,6 +95,7 @@ const Login = () => {
 
   return (
     <div className="h-full border-4" style={{backgroundImage: `url('${bgLogin}')`}}>
+      <button className="btn-sm"><Link to='/'>home</Link></button>
       <div 
       className={`hero min-h-screen shadow-2xl border-4 w-[1000px] mx-auto my-10`}>
         <Helmet>
@@ -107,16 +144,11 @@ const Login = () => {
                 <input
                   type="text"
                   name="captcha"
-                  ref={validateRef}
+                  onBlur={handleValidateCaptcha}
                   required
                   placeholder="type the text above"
                   className="input input-bordered"
                 />
-                <button 
-             
-                onClick={handleValidateCaptcha}
-                className="btn btn-xs mt-4">
-                VALIDATE</button>
               </div>
 
               <div className="form-control mt-6">

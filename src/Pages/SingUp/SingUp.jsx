@@ -3,12 +3,16 @@ import { FaGithub } from "react-icons/fa";
 import { Helmet } from "react-helmet";
 import bgLogin from "../../assets/others/authentication.png";
 import loginPng from "../../assets/others/authentication2.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Hooks/useAuth";
+import Swal from "sweetalert2";
+
+
 
 const SingUp = () => {
 
-    const {createUser} = useAuth()
+    const {createUser} = useAuth();
+    const navigate = useNavigate();
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -18,15 +22,26 @@ const SingUp = () => {
         const name = form.name.value;
         const user = { email, password , name};
         console.log(user);
-        createUser(email , password)
+
+        createUser( email , password)
         .then(result =>{
             console.log(result.user);
+            Swal.fire({
+              position: "top",
+              icon: "success",
+              title: "Account create successfully",
+              showConfirmButton: false,
+              timer: 1500
+            });
+            navigate('/login')
         })
+       
       }
 
 
     return (
         <div className="h-full border-4" style={{backgroundImage: `url('${bgLogin}')`}}>
+          <button className="btn-sm"><Link to='/'>home</Link></button>
         <div 
         className={`hero min-h-screen shadow-2xl border-4 w-[1000px] mx-auto my-10`}>
           <Helmet>
