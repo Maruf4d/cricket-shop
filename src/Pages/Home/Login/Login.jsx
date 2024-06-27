@@ -4,7 +4,7 @@ import loginPng from "../../../assets/others/authentication2.png";
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../Hooks/useAuth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import Swal from "sweetalert2";
@@ -16,6 +16,8 @@ const Login = () => {
     // auth Context
     const {singIn , googleLogin} = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/'
 
   // form submit
   function handleSubmit(e) {
@@ -25,8 +27,8 @@ const Login = () => {
     const password = form.password.value;
     
     singIn(email , password)
-    .then(result =>{
-      console.log(result.user);
+    .then(()=>{
+
       Swal.fire({
         title: "user login successfully",
         icon: "success",
@@ -45,7 +47,7 @@ const Login = () => {
           `
         }
       });
-      navigate('/')
+      navigate(from , {replace: true})
     })
   }
 

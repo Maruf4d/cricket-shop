@@ -5,6 +5,7 @@ import Menu from "../componentes/Menu/Menu";
 import Order from "../Pages/Order/Order";
 import Login from "../Pages/Home/Login/Login";
 import SingUp from "../Pages/SingUp/SingUp";
+import PrivetRoute from "./PrivetRoute/PrivetRoute";
 
 
   export const router = createBrowserRouter([
@@ -18,7 +19,9 @@ import SingUp from "../Pages/SingUp/SingUp";
         },
         {
           path: 'menu',
-          element: <Menu/>,
+          element: <PrivetRoute>
+            <Menu/>
+          </PrivetRoute>,
         },
         {
           path: 'order/:category',

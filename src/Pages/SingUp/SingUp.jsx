@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 
 const SingUp = () => {
 
-    const {createUser} = useAuth();
+    const {createUser , updateUserProfile} = useAuth();
     const navigate = useNavigate();
 
     function handleSubmit(e) {
@@ -19,13 +19,13 @@ const SingUp = () => {
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        const name = form.name.value;
-        const user = { email, password , name};
-        console.log(user);
 
-        createUser( email , password)
-        .then(result =>{
-            console.log(result.user);
+       createUser( email , password)
+        .then((result) =>{
+          updateUserProfile(result.name , result.photoURL)
+          .then(() => {
+            console.log("data is update");
+          })
             Swal.fire({
               position: "top",
               icon: "success",
@@ -62,6 +62,19 @@ const SingUp = () => {
                     type="text"
                     name="name"
                     placeholder="Name"
+                    className="input input-bordered"
+                    required
+                  />
+                </div>
+
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Name</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="photoURL"
+                    placeholder="Photo"
                     className="input input-bordered"
                     required
                   />
