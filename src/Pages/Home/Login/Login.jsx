@@ -17,7 +17,8 @@ const Login = () => {
     const {singIn , googleLogin} = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || '/'
+    const from = location.state?.from?.pathname || '/';
+    console.log("state in the login of location", location.state);
 
   // form submit
   function handleSubmit(e) {

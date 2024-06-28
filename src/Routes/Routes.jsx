@@ -25,7 +25,10 @@ import PrivetRoute from "./PrivetRoute/PrivetRoute";
         },
         {
           path: 'order/:category',
-          element: <Order/>,
+          element: 
+          // <PrivetRoute>
+            <Order/>
+          // </PrivetRoute>,
         },
         {
           path: 'login',
